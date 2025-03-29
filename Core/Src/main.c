@@ -120,6 +120,8 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 // Модифицируем функцию HAL_UARTEx_RxEventCallback для обработки новых команд
 void HAL_UARTEx_RxEventCallback(UART_HandleTypeDef *huart, uint16_t Size) {
     if (huart->Instance == USART1) {
+        sprintf(TxData, "<PC>: %s\r\n", (char*)RxData);
+        sendData(TxData);
         if (strncmp((char*)RxData, "lcd", 2) == 0) {
             LcdCommand = 1;
         } else if (strncmp((char*)RxData, "set", 3) == 0) {
